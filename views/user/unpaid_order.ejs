@@ -1,0 +1,214 @@
+<% include ../partials/head.ejs %>
+
+<% include ../partials/header.ejs %>
+
+<style>
+    .abf-frame p {
+	font-family: Helvetica!important;
+	line-height: 18px;
+	margin: 0!important;
+	padding: 0!important
+}
+.abf-frame {
+	color: #000!important;
+	background-color: #fff!important;
+	font-family: Helvetica!important;
+	width:90%;
+	max-height: 600px;
+	margin-top: 0;
+	text-align: left;
+	box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+	border-radius: 3px;
+	font-size: 12px
+}
+.abf-frame a {
+	font-family: Helvetica!important;
+	color: #6A8FC2!important
+}
+.abf-frame a:hover {
+	color: #676573!important
+}
+.abf-form {
+	padding: 0 24px 24px
+}
+.abf-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px 24px;
+	min-height: 93px
+}
+.abf-header div:nth-child(1) img {
+	display: inline-block;
+	margin: 5px 0
+}
+.abf-ash1 {
+	text-align: center;
+	font-size: 14px;
+	margin: 12px 0
+}
+.abf-ash2 {
+	font-size: 14px;
+	text-align: center;
+	margin: 12px 0;
+	font-weight: 700
+}
+.abf-topline {
+	border-top: 1px solid #dedede!important;
+	padding-top: 12px
+}
+.abf-list-item {
+	padding: 4px 0;
+	display: flex;
+	align-items: baseline
+}
+.abf-label {
+	display: inline-block;
+	width: 45%;
+	padding-right: 24px;
+	box-sizing: border-box;
+	vertical-align: top;
+	font-size: 12px;
+	opacity: .5;
+	text-align: right
+}
+.abf-value {
+	display: inline-block;
+	width: 48%;
+	box-sizing: border-box
+}
+.abf-confirmations {
+	display: inline-block;
+	background-color: #dc3545!important;
+	width: 12px;
+	height: 12px;
+	font-size: 9px;
+	line-height: 12px;
+	text-align: center;
+	color: #fff!important;
+	border-radius: 50%;
+	margin-left: 3px
+}
+.abf-green {
+	background-color: #28a745!important
+}
+.abf-img-height {
+	max-height: 80px
+}
+
+@media (max-width: 767px) {
+    .abf-ash2{
+        font-size: 0.6em;
+    }
+}
+
+</style>
+ 
+    <div class="container pb-5">
+      <input type="hidden" value="<%-order.address%>" id="btcaddress">
+        <div class="abf-frame mb-5">
+            <div class="abf-header">
+              <div>
+                <div class="abf-ash1"><img src="https://apirone.com/static/promo/bitcoin_logo_vector.svg" width="95" alt=""></div>
+              </div>
+              <div style="text-align: center; background-color:#fff;"><span class="abf-qr"> <img class="img-fluid" src="https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=bitcoin:<%-order.address%>" style="display: inline;" alt="QR code for payment"> </span> </div>
+            </div>
+            <div class="abf-form">
+              <div class="abf-ash1"> Please send <strong><span class="abf-totalbtc">$<%-order.price%></span></strong> 
+                to address: </div>
+              <div class="abf-address abf-topline abf-ash2 abf-input-address" id="btc-address"><%-order.address%></div>
+              <div class="d-flex justify-content-center bd-highlight mb-3">
+                    <button data-copy="<%-order.address%>" class="btn btn-light btn-icon-split btn-sm js-copy justify-content-center">
+                            <span class="icon text-gray-50">
+                              <i class="fas fa-copy"></i>
+                            </span>
+                            <span class="text">Copy Address</span>
+                      </button>      
+                  </div>
+              
+              <div class="abf-data abf-topline">
+                <div class="abf-list">
+                  <div class="abf-list-item">
+                    <div class="abf-label">Merchant:</div>
+                    <div class="abf-value">Earnly</div>
+                  </div>
+                  <div class="abf-list-item">
+                    <div class="abf-label">Amount to pay:</div>
+                    <div class="abf-value"><span class="abf-totalbtc"><%-order.price%></span> Dollars</div>
+                  </div>
+                  
+                  <div class="abf-list-item">
+                    <div class="abf-label">Date:</div>
+                    <div class="abf-value"><%-order.created%></div>
+                  </div>
+                  <div class="abf-list-item abf-tx-block">
+                    <div class="abf-label">Transaction(s):</div>
+                    <div class="abf-value abf-tx">
+                      <div><a href="https://www.blockchain.com/search?search=<%-order.address%>" target="_blank">Check</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="abf-list-item">
+                    <div class="abf-label">Status:</div>
+                    <div class="abf-value"><b><span class="abf-status"><%-order.order_status%></span></b></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>            
+    </div>
+
+<% include ../partials/footer.ejs %>
+
+<script>
+   function copyToClipboard(text, el) {
+  var copyTest = document.queryCommandSupported('copy');
+  var elOriginalText = el.attr('data-original-title');
+
+  if (copyTest === true) {
+    var copyTextArea = document.createElement("textarea");
+    copyTextArea.value = text;
+    document.body.appendChild(copyTextArea);
+    copyTextArea.select();
+    try {
+      var successful = document.execCommand('copy');
+      var msg = successful ? 'Copied!' : 'Whoops, not copied!';
+      el.attr('data-original-title', msg).tooltip('show');
+    } catch (err) {
+      console.log('Oops, unable to copy');
+    }
+    document.body.removeChild(copyTextArea);
+    el.attr('data-original-title', elOriginalText);
+  } else {
+    // Fallback if browser doesn't support .execCommand('copy')
+    window.prompt("Copy to clipboard: Ctrl+C or Command+C, Enter", text);
+  }
+}
+
+$(document).ready(function() {
+  // Initialize
+  // ---------------------------------------------------------------------
+
+  // Tooltips
+  // Requires Bootstrap 3 for functionality
+  $('.js-tooltip').tooltip();
+
+  // Copy to clipboard
+  // Grab any text in the attribute 'data-copy' and pass it to the 
+  // copy function
+  $('.js-copy').click(function() {
+    var text = $(this).attr('data-copy');
+    var el = $(this);
+    copyToClipboard(text, el);
+  });
+});
+
+btcaddress = $("#btcaddress").val();
+        if (btcaddress == '') {
+            location.reload();
+  }
+</script>
+
+</body>            
+</html>

@@ -1,0 +1,298 @@
+<% include ../partials/head.ejs %>
+
+
+    <% include ../partials/header.ejs %>
+        <% let x=0; %>
+            <!-- begin::Body -->
+            <div class="m-grid__item m-grid__item--fluid  m-grid m-grid--ver-desktop m-grid--desktop m-page__container m-body">
+                <div class="m-grid__item m-grid__item--fluid m-wrapper">
+
+                    <div class="m-content">
+                        <div class="m-portlet m-portlet--tabs">
+                            <div class="m-portlet__head">
+                                <div class="m-portlet__head-caption">
+                                    <div class="m-widget4">
+                                        <%- messages('message', locals) %>
+                                            <!--begin::Widget 14 Item-->
+                                            <div class="m-widget4__item">
+                                                <div class="m-widget4__img m-widget4__img--pic">
+                                                    <img src="/uploads/<%= user.picture %>" alt="">
+                                                </div>
+                                                <div class="m-widget4__info">
+                                                    <span class="m-widget4__title">
+                                                                        <%= user.first_name %> <%= user.last_name %>
+                                                                    </span><br>
+                                                    <span class="m-widget4__sub">
+                                                                            <%= user.email %>
+                                                                    </span>
+                                                </div>
+                                                <div class="m-widget4__ext">
+                                                    <!-- <a href="#" class="m-btn m-btn--pill m-btn--hover-brand btn btn-sm btn-secondary">Follow</a> -->
+                                                </div>
+                                            </div>
+
+                                            <!--end::Widget 14 Item-->
+
+                                    </div>
+                                    <!-- <div class="m-portlet__head-title">
+                                                    <h3 class="m-portlet__head-text">
+                                                        Portlet Tabs <small>with metronic icons</small>
+                                                    </h3>
+                                                </div> -->
+                                </div>
+                                <div class="m-portlet__head-tools">
+                                    <ul class="nav nav-tabs m-tabs m-tabs-line m-tabs-line--brand  m-tabs-line--right m-tabs-line-danger" role="tablist">
+                                        <li class="nav-item m-tabs__item">
+                                            <a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_portlet_tab_2_1" role="tab">
+                                                <i class="flaticon-home"></i> Overview
+                                            </a>
+                                        </li>
+                                        <li class="nav-item m-tabs__item">
+                                            <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_portlet_tab_2_2" role="tab">
+                                                <i class="flaticon-tabs"></i> Transactions
+                                            </a>
+                                        </li>
+                                        <li class="nav-item m-tabs__item">
+                                            <a class="nav-link m-tabs__link" data-toggle="tab" href="#m_portlet_tab_2_3" role="tab">
+                                                <i class="flaticon-up-arrow"></i> Pay Out Request
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="m-portlet__body">
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="m_portlet_tab_2_1">
+                                        <div class="m-widget25">
+                                            <span class="m-widget25__price m--font-brand"> <div id="userBalance">$<%= user.balance.toFixed(2); %></div>
+                                                                </span>
+                                            <span class="m-widget25__desc">In your wallet</span>
+                                            <!-- <div class="m-widget25--progress">
+                                                                    <div class="m-widget25__progress">
+                                                                        <span class="m-widget25__progress-number">
+                                                                            63%
+                                                                        </span>
+                                                                        <div class="m--space-10"></div>
+                                                                        <div class="progress m-progress--sm">
+                                                                            <div class="progress-bar m--bg-danger" role="progressbar" style="width: 100%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                        <span class="m-widget25__progress-sub">
+                                                                            This Month Earning
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="m-widget25__progress">
+                                                                        <span class="m-widget25__progress-number">
+                                                                            39%
+                                                                        </span>
+                                                                        <div class="m--space-10"></div>
+                                                                        <div class="progress m-progress--sm">
+                                                                            <div class="progress-bar m--bg-accent" role="progressbar" style="width: 39%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                        <span class="m-widget25__progress-sub">
+                                                                            Product Growth
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="m-widget25__progress">
+                                                                        <span class="m-widget25__progress-number">
+                                                                            54%
+                                                                        </span>
+                                                                        <div class="m--space-10"></div>
+                                                                        <div class="progress m-progress--sm">
+                                                                            <div class="progress-bar m--bg-warning" role="progressbar" style="width: 54%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                                                        </div>
+                                                                        <span class="m-widget25__progress-sub">
+                                                                            Community Growth
+                                                                        </span>
+                                                                    </div>
+                                                                </div> -->
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="tab-pane " id="m_portlet_tab_2_2">
+                                        <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                                            <div class="row align-items-center">
+                                                <div class="col-xl-8 order-2 order-xl-1">
+                                                    <div class="form-group m-form__group row align-items-center">
+                                                        <div class="col-md-4">
+                                                            <div class="m-input-icon m-input-icon--left">
+                                                                <input type="text" class="form-control m-input" placeholder="Search..." id="generalSearch">
+                                                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                                                        <span><i class="la la-search"></i></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                                                    <div class="m-separator m-separator--dashed d-xl-none"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table class="trans-datatable" id="html_table" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th title="Field #1" data-field="index">#</th>
+                                                    <th title="Field #2" data-field="Date">Date</th>
+                                                    <th title="Field #3" data-field="Address">Address</th>
+                                                    <th title="Field #4" data-field="Status">Status</th>
+                                                    <th title="Field #5" data-field="Type">Type</th>
+                                                    <th title="Field #6" data-field="Amount">Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% transections.forEach(function(trans, index){ %>
+                                                    <tr>
+                                                        <td>
+                                                            <%= (index + 1) %>
+                                                        </td>
+                                                        <td>
+                                                            <%= moment.unix((trans.date/1000)).format('LL') %>
+                                                        </td>
+                                                        <td>
+                                                            <%= trans.address %>
+                                                        </td>
+                                                        <td>
+                                                            <%= trans.trans_type %>
+                                                        </td>
+                                                        <td>
+                                                            <%= trans.trans_status %>
+                                                        </td>
+                                                        <td>$
+                                                            <% amount = trans.amount != null  ?  trans.amount : 0; %>
+                                                                <%= amount.toFixed(2); %>
+                                                        </td>
+                                                    </tr>
+                                                    <% }); %>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                    <div class="tab-pane " id="m_portlet_tab_2_3">
+                                        <div id="reqStatusPos"></div>
+                                        <div class="m-form m-form--label-align-right m--margin-top-20 m--margin-bottom-30">
+                                            <div class="row align-items-center">
+                                                <div class="col-xl-7 order-2 order-xl-1">
+                                                    <div class="form-group m-form__group row align-items-center">
+                                                        <div class="col-md-8">
+                                                            <div class="m-input-icon m-input-icon--left">
+                                                                <input type="text" class="form-control m-input" placeholder="Search..." id="payoutSearch">
+                                                                <span class="m-input-icon__icon m-input-icon__icon--left">
+                                                                                        <span><i class="la la-search"></i></span>
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xl-3 order-1 order-xl-2 m--align-right">
+                                                    <a href="/user/wallet/request" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+                                                        <span>
+                                                                                    <i class="fa fa-dollar-sign"></i>
+                                                                                    <span>New Payout Request</span>
+                                                        </span>
+                                                    </a>
+                                                    <div class="m-separator m-separator--dashed d-xl-none"></div>
+                                                </div>
+                                                
+                                                <div class="col-xl-2 order-1 order-xl-2 m--align-right">
+                                                    <a href="/user/wallet/swaptokens" class="btn btn-primary m-btn m-btn--custom m-btn--icon m-btn--air m-btn--pill">
+                                                        <span>
+                                                                                    <i class="fa fa-coins"></i>
+                                                                                    <span>Swap Tokens</span>
+                                                        </span>
+                                                    </a>
+                                                    <div class="m-separator m-separator--dashed d-xl-none"></div>
+                                                </div>
+                                                <div class="col-xl-4 order-1 order-xl-2 m--align-right">
+                                                    <div class="m-separator m-separator--dashed d-xl-none"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <table class="payout-datatable" id="html_table" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th title="Field #1" data-field="index">#</th>
+                                                    <th title="Field #2" data-field="Date">Date</th>
+                                                    <th title="Field #3" data-field="Amount">Amount</th>
+                                                    <th title="Field #4" data-field="Commission">Commission</th>
+                                                    <th title="Field #5" data-field="Total">Total</th>
+                                                    <th title="Field #6" data-field="btc">BTC</th>
+                                                    <th title="Field #7" data-field="referrence">Referrence</th>
+                                                    <th title="Field #8" data-field="Status">Status</th>
+                                                    <th title="Field #9" data-field="Action">Action</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% payouts.forEach(function(payout, index){ %>
+                                                    <tr>
+                                                        <td>
+                                                            <%= (index + 1) %>
+                                                        </td>
+                                                        <td>
+                                                            <%= moment(payout.created).format('LL'); %>
+                                                        </td>
+                                                        <td>$
+                                                            <%= payout.amount %>
+                                                        </td>
+                                                        <td>$
+                                                            <%= payout.com %>
+                                                        </td>
+                                                        <td>$
+                                                            <%= payout.total %>
+                                                        </td>
+                                                        <td>
+                                                            <%= payout.btc %>
+                                                        </td>
+                                                        <td>
+                                                            <%= payout.reference %>
+                                                        </td>
+
+                                                        <td>
+                                                            <% if(payout.status == 'unpaid'){ %>
+                                                                <span class="m-badge m-badge--warning m-badge--wide">Unpaid</span>
+                                                                <% } if (payout.status == 'pending') {%>
+                                                                    <span class="m-badge m-badge--metal m-badge--wide">Pending</span>
+                                                                    <% } if (payout.status == 'paid') {%>
+                                                                        <span class="m-badge m-badge--success m-badge--wide">Paid</span>
+                                                                        <% } if (payout.status == 'canceled') {%>
+                                                                            <span class="m-badge m-badge--danger m-badge--wide">Cancelled</span>
+                                                                            <% } %>
+                                                        </td>
+                                                        <td>
+                                                            <div class="btn-group m-btn-group" role="group" aria-label="...">
+                                                                <a href="/user/payout/<%= payout._id %>" class="btn btn-info">View</a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <% }); %>
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end:: Body -->
+            <% include ../partials/footer.ejs %>
+                <script src="../../../assets/wallet/wallet-transection.js" type="text/javascript"></script>
+
+                <script src="../../../assets/wallet/payout-transection.js" type="text/javascript"></script>
+
+                <script>
+                    $(document).ready(function() {
+
+                        // var btc = '';
+                        // $.get("https://api.cryptonator.com/api/ticker/btc-usd", function(data, status){
+                        // btc = data.ticker['price'];
+                        // });       
+
+                    });
+                </script>
+                <script>
+                    $(document).ready(function() {
+                        $("#wallet-menu").addClass('m-menu__item--active  m-menu__item--active-tab');
+                    });
+                </script>

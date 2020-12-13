@@ -1,0 +1,103 @@
+    
+<% include ../partials/head.ejs %>
+
+            
+<% include ../partials/header.ejs %>
+<% let time; let formatted; let total %>
+
+           	<!-- begin::Body -->
+               <div class="m-grid__item m-grid__item--fluid  m-grid m-grid--ver-desktop m-grid--desktop m-page__container m-body">
+                <div class="m-grid__item m-grid__item--fluid m-wrapper">
+
+                    <div class="m-content">
+						<div class="m-portlet m-portlet--mobile">
+							<div class="m-portlet__head">
+								<div class="m-portlet__head-caption">
+									<div class="m-portlet__head-title">
+										<h3 class="m-portlet__head-text">
+											Mining Details
+										</h3>
+									</div>
+								</div>
+								<div class="m-portlet__head-tools">
+								</div>
+							</div>
+							<div class="m-portlet__body">
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="m_widget5_tab1_content" aria-expanded="true">
+
+                                        <!--begin::m-widget5-->
+                                        <div class="m-widget5">
+                                               <% orders.forEach(function(order, index){ %>
+                                            <a style="text-decoration:none" href="/user/mine/<%= order._id %>">
+                                                <div class="m-widget5__item">
+                                                <div class="m-widget5__content">
+                                                    <div class="m-widget5__section">
+                                                        <h4 class="m-widget5__title">
+                                                                
+                                                                <% for (var j = 0; j < packages.length; j++) { %>
+                                                                    
+                                                                    <% if(packages[j]._id==order.package_id){ %>
+                                                                        <%= packages[j].title %>
+                                                                    <% } %>        
+                                                                <% }; %>
+                                                        </h4>
+                                                        <span class="m-widget5__desc">
+                                                            
+                                                        </span>
+                                                        <div class="m-widget5__info">
+                                                                <span class="m-widget5__author">
+                                                                    Started Date:
+                                                                </span>
+                                                                <span class="m-widget5__info-author m--font-info">
+                                                                        <% time = order.activation_date / 1000;
+                                                                        formatted = moment.unix(time).format('LL'); %>
+                                                                        <%= formatted; %>
+                                                                </span>
+                                                                <span class="m-widget5__info-label">
+                                                                    Completion Date:
+                                                                </span>
+                                                                <span class="m-widget5__info-date m--font-info">
+                                                                        <%  time = order.completion_date  / 1000;
+                                                                         formatted = moment.unix(time).format('LL'); %>
+                                                                        <%= formatted; %>
+                                                                </span>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                                <div class="m-widget5__content">
+                                                    <div class="m-widget5__stats1"> 
+                                                        <span class="m-widget5__number"><%= order.price %></span><br>
+                                                        <span class="m-widget5__sales">Invested</span>
+                                                    </div>
+                                                    <div class="m-widget5__stats2">
+                                                        <% total = parseInt(order.price);
+                                                            total = total + total*0.75 %>
+                                                        <span class="m-widget5__number"><%= total %></span><br>
+                                                        <span class="m-widget5__votes">Expected Earning</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="m-separator m-separator--space m-separator--dashed"></div>
+                                            <% }); %>
+                                        </div>
+
+                                        <!--end::m-widget5-->
+                                    </div>
+                                </div>
+							</div>
+						</div>
+
+						<!-- END EXAMPLE TABLE PORTLET-->
+					</div>
+				</div>
+            </div>
+           
+			<!-- end:: Body -->
+<% include ../partials/footer.ejs %>  
+<script>
+        $(document).ready(function() {
+            $("#allocation-menu").addClass('m-menu__item--active  m-menu__item--active-tab');
+        });
+    </script>

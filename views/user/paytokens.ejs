@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="shortcut icon" href="/assets/demo/media/img/logo/favicon.ico" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<link href="/vendors/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+	<link href="/assets/wallet/token.css" rel="stylesheet" type="text/css" />
+	<title>CCB - Pay Token</title>
+
+  </head>
+
+  <body>
+	  
+    <div id="walletDiv" class="animate-bottom" class="wrapper">
+        <div class="app-wrapper">
+    
+          <!--Wallet-->
+          <aside class="wallet">
+				
+						<a href="/wallet">
+					  <h2 class="ccb-logo">CCB</h2>
+					  <h2 style="border-bottom: 1px solid;" >Wallet</h2>
+				  </a>	
+					  <br>
+					  <br>
+          </aside>
+    
+          <content class="transactions-wrapper">
+            <h2>
+              Total Tokens
+              <span class="total-balance"><%= order.tokens %></span>
+            </h2>
+            <div class="transactions show">
+					<input type="hidden" value="<%= order.order_id %>" id="order_id">
+				<div class="m-portlet">
+					<div class="m-portlet__head">
+						<div class="m-portlet__head-caption">
+							<div class="m-portlet__head-title">
+								<span class="m-portlet__head-icon">
+									<i class="flaticon-dollor"></i>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="m-portlet__body">
+							<div class="form-group m-form__group text-center">
+								
+									<img id="btc_img" height="50%" width="50%" src="">
+								</div>
+								<div class="form-group m-form__group">
+									<label>Bitcoin Wallet Address</label>
+									<div class="input-group">
+										<input type="text" id="btcaddress" class="form-control" value="<%= order.address %>" readonly>
+										<div class="input-group-append">
+											<a tabindex="0" class="btn btn-success" role="button" data-toggle="m-tooltip" data-trigger="focus" title="" data-content="Copy Bitcoin Wallet Address." data-original-title="Copied!"><i class="fa fa-copy"></i></a>
+										</div>
+									</div>
+								</div>
+								
+									<div class="form-group m-form__group">
+										<div class="form-control-feedback" id="vMessage"></div>
+									</div>        
+								<div class="form-group m-form__group">
+									<label for="exampleInputEmail1">Total Payable Amount</label>
+									<div class="input-group m-input-group">
+										<div class="input-group-prepend"><span class="input-group-text" id="basic-addon1"><i class="fa fa-dollar"></i></span></div>
+										<input type="text" class="form-control m-input" id="amount" value="<%= (order.amount) %>" readonly>
+									</div>
+								</div>
+						<hr>
+						
+					</div>
+				</div>
+			</div>
+          </content>
+    
+        </div>
+    
+      </div>
+      
+
+      
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	
+
+	<script src="../../../../vendors/sweetalert2/dist/sweetalert2.min.js" type="text/javascript"></script>
+	<script src="../../../../vendors/js/framework/components/plugins/base/sweetalert2.init.js" type="text/javascript"></script>
+	<script src="../../assets/demo/custom/components/base/sweetalert2.js" type="text/javascript"></script>
+
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+	<script>
+			$(document).ready(function () {
+			  var btc = '';
+			  var convertedCost = '';
+			  var orderid = $("#order_id").val();
+			  var token = $("#token").val();  
+			  
+			  function checkOrderStatus(order_id) {
+        
+		var request = $.ajax({
+				url: "/user/wallet/tokenstatus",
+				type: "POST",
+				async: false,
+				data: {
+					order_id: order_id
+				},
+				dataType: 'json',
+			});
+
+		request.done(function(msg) {
+			ref = JSON.stringify(msg);
+			order_status = JSON.parse(ref);
+			
+			if (order_status['order'] == 'yes') {
+				
+				if (order_status['order_status'] == 'pending') {
+					swal("Payment Received !", "<b>Thank you for investing in CCB Coin.</b><br> Your payment transaction has been successful!<br> Soon you shall receive a confirmation email related to your token's deposited on your registered email address.", "success").then(function () {
+						setTimeout(function(){ 
+							window.location.replace("/wallet");
+						}, 1500); 
+					})
+				}
+				else{
+					setTimeout(function(){ 
+						console.log('Checking !!!');
+						checkOrderStatus(order_id);
+					}, 5000);
+				}
+			
+			} else {
+				console.log('error !!');
+				
+			}
+		});
+
+		request.fail(function(jqXHR, textStatus) {
+			console.log("Request failed: " + textStatus);
+		});
+	}
+
+	checkOrderStatus($("#order_id").val());
+
+			btcaddress = $("#btcaddress").val();
+			if (btcaddress == '') {
+				location.reload();
+			}
+			toImg = "https://chart.googleapis.com/chart?chs=250x250&cht=qr&chl=bitcoin:"+btcaddress;
+			  $('#btc_img').attr('src',toImg);
+	
+		});
+	
+	
+	// $(document).ready(function () {
+	
+	// 	var orderid = $("#order_id").val();
+		
+	// 	function checkOrderStatus(order_id) {
+			
+	// 					var request = $.ajax({
+	// 							url: "/user/order/checkstatus",
+	// 							type: "POST",
+	// 							async: false,
+	// 							data: {
+	// 								order_id: order_id
+	// 							},
+	// 							dataType: 'json',
+	// 						});
+	
+	// 					request.done(function(msg) {
+	// 						ref = JSON.stringify(msg);
+	// 						order_status = JSON.parse(ref);
+							
+	// 						if (order_status['order'] == 'yes') {
+								
+	// 							if (order_status['order_status'] == 'pending') {
+	// 								swal("Payment Received !", "<b>Thank you for investing with CCB Mining.</b><br> Your payment transaction has been successful!<br> Soon you shall receive a confirmation mail related to your mining allocation on your registered email address.", "success").then(function () {
+	// 									setTimeout(function(){ 
+	// 										location.reload();
+	// 									}, 1500); 
+	// 								})
+	// 							}
+	// 							else{
+	// 								setTimeout(function(){ 
+	// 									console.log('Checking order status !!!');
+	// 									checkOrderStatus(order_id);
+	// 								}, 5000);
+	// 							}
+							
+	// 						} else {
+	// 							console.log('error !!');
+								
+	// 						}
+	// 					});
+	
+	// 					request.fail(function(jqXHR, textStatus) {
+	// 						console.log("Request failed: " + textStatus);
+	// 					});
+	// 				}
+	// 			checkOrderStatus($("#order_id").val());                    
+	// 	});    
+	
+	
+	
+	
+	</script>
+	
+
+</body>
+</html>
+
+
+

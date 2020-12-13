@@ -1,0 +1,100 @@
+    
+<% include ../partials/head.ejs %>
+            
+<% include ../partials/header.ejs %>
+           	<!-- begin::Body -->
+               <div class="m-grid__item m-grid__item--fluid  m-grid m-grid--ver-desktop m-grid--desktop m-page__container m-body">
+                <div class="m-grid__item m-grid__item--fluid m-wrapper">
+
+                        <div class="container">
+                                <div class="m-portlet m-portlet--mobile">
+                                    <div class="m-portlet__head">
+                                        <div class="m-portlet__head-caption">
+                                            <div class="m-portlet__head-title">
+                                                <h3 class="m-portlet__head-text">
+                                                    All Payout Requests
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+        
+                                        <!--begin: Datatable -->
+                                        <table class="table table table-bordered" id="dataTable">
+                                            <thead>
+                                                <tr>
+                                                    <th title="Field #1" data-field="index">#</th>
+                                                    <th title="Field #2" data-field="Date">Date</th>
+                                                    <th title="Field #3" data-field="Amount">Amount</th>
+                                                    <th title="Field #4" data-field="Commission">Commission</th>
+                                                    <th title="Field #5" data-field="Total">Total</th>
+                                                    <th title="Field #8" data-field="Status">Status</th>
+                                                    <th title="Field #9" data-field="Action">Action</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <% payouts.forEach(function(payout, index){ %>
+                                                    <tr>
+                                                        <td>
+                                                            <%= (index + 1) %>
+                                                        </td>
+                                                        <td>
+                                                            <%= moment(payout.created).format('LL'); %>
+                                                        </td>
+                                                        <td>$<%= payout.amount %>
+                                                        </td>
+                                                        <td>$<%= payout.com %>
+                                                        </td>
+                                                        <td>$<%= payout.total %>
+                                                        </td>
+                                                        <td>
+                                                            <% if(payout.status == 'unpaid'){ %>
+                                                                <span class="m-badge m-badge--warning m-badge--wide">Unpaid</span>
+                                                                <% } if (payout.status == 'pending') {%>
+                                                                    <span class="m-badge m-badge--metal m-badge--wide">Pending</span>
+                                                                    <% } if (payout.status == 'paid') {%>
+                                                                        <span class="m-badge m-badge--success m-badge--wide">Paid</span>
+                                                                        <% } if (payout.status == 'canceled') {%>
+                                                                            <span class="m-badge m-badge--danger m-badge--wide">Cancelled</span>
+                                                                            <% } %>
+                                                        </td>
+                                                        <td>
+                                                            <div class="btn-group m-btn-group" role="group" aria-label="...">
+                                                                <a href="/user/payout/<%= payout._id %>" class="btn btn-info">View</a>
+                                                            </div>
+                                                            <!-- <div class="btn-group m-btn-group" role="group" aria-label="...">
+                                                                <a href="#" class="btn btn-info">View</a>
+                                                            </div> -->
+                                                        </td>
+                                                    </tr>
+                                                    <% }); %>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+        
+                                <!-- END EXAMPLE TABLE PORTLET-->
+                            </div>
+				</div>
+            </div>
+           
+			<!-- end:: Body -->
+<% include ../partials/footer.ejs %>  
+<script src="../../../assets/panel/vendor/datatables/jquery.dataTables.min.js"></script>
+<script src="../../../assets/panel/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+<script>
+        $(document).ready(function() {
+            $("#orders-menu").addClass('m-menu__item--active  m-menu__item--active-tab');
+        });
+
+        $(document).ready(function() {
+                $('#dataTable').DataTable();
+            });
+
+    </script>
+
+
+    </body>
+</html>

@@ -1,0 +1,169 @@
+<% include ../partials/head.ejs %>
+<% include ../partials/header.ejs %>
+<link href="/../../../cms/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Sent</h6>
+    </div>
+    <div class="card-body">
+            <%- messages('message', locals) %>
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#home">Sent</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu1">Pending</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu2">Error</a>
+              </li>
+            </ul>
+            
+            <!-- Tab panes -->
+            <div class="tab-content p-3">
+              <div class="tab-pane active container" id="home">
+
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Mobile</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Log</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>#</th>
+                    <th>Mobile</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Log</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+
+                  <% msgs.forEach((element, key) => { if(element.status=='sent') { %>
+                      <tr>
+                          <td><%- key+1  %></td>
+                          <td><%- element.mobile  %></td>
+                          <td><%- element.name  %></td>
+                          <td><%-  element.status  %></td>
+                          <td><%-  element.log  %></td>
+                          
+                          </td>
+                        </tr>
+                      <% } }); %>
+                 
+                </tbody>
+              </table>
+            </div>
+
+
+              </div>
+              <div class="tab-pane container" id="menu1">
+
+                  
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Mobile</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Log</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>#</th>
+                    <th>Mobile</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Log</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+
+                  <% msgs.forEach((element, key) => { if(element.status=='pending') { %>
+                      <tr>
+                          <td><%- key+1  %></td>
+                          <td><%- element.mobile  %></td>
+                          <td><%- element.name  %></td>
+                          <td><%-  element.status  %></td>
+                          <td><%-  element.log  %></td>
+                          
+                          </td>
+                        </tr>
+                      <% } }); %>
+                 
+                </tbody>
+              </table>
+            </div>
+
+
+              </div>
+              <div class="tab-pane container" id="menu2">
+
+                    
+            <div class="table-responsive">
+              <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Mobile</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Log</th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr>
+                    <th>#</th>
+                    <th>Mobile</th>
+                    <th>Name</th>
+                    <th>Status</th>
+                    <th>Log</th>
+                  </tr>
+                </tfoot>
+                <tbody>
+
+                  <% msgs.forEach((element, key) => { if(element.status=='error') { %>
+                      <tr>
+                          <td><%- key+1  %></td>
+                          <td><%- element.mobile  %></td>
+                          <td><%- element.name  %></td>
+                          <td><%-  element.status  %></td>
+                          <td><%-  element.log  %></td>
+                          
+                          </td>
+                        </tr>
+                      <% } }); %>
+                 
+                </tbody>
+              </table>
+            </div>
+
+
+              </div>
+            </div>
+
+            
+      
+    </div>
+  </div>
+
+  <% include ../partials/footer.ejs %>
+  
+    <!-- Page level plugins -->
+    <script src="/../../../cms/vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="/../../../cms/vendor/datatables/dataTables.bootstrap4.min.js"></script>
+  
+      <!-- Page level custom scripts -->
+      <script src="/../../../cms/js/demo/datatables-demo.js"></script>
+</body>
+
+</html>
