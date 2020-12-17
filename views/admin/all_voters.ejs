@@ -3,7 +3,7 @@
 <link href="/../../../cms/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">All Contacts</h6>
+      <h6 class="m-0 font-weight-bold text-primary">All Voters</h6>
     </div>
     <div class="card-body">
             <%- messages('message', locals) %>
@@ -12,9 +12,9 @@
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Mobile</th>
                       <th>Name</th>
-                      <th>Email</th>
+                      <th>Voter ID</th>
+                      <th>Voter CNIC</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -22,25 +22,31 @@
                   <tfoot>
                     <tr>
                       <th>#</th>
-                      <th>Mobile</th>
                       <th>Name</th>
-                      <th>Email</th>
+                      <th>Voter ID</th>
+                      <th>Voter CNIC</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
                   </tfoot>
                   <tbody>
 
-                    <% cafes.forEach((element, key) => { %>
+                    <% voters.forEach((element, key) => { %>
                         <tr>
                             <td><%- key+1  %></td>
-                            <td><%- element.mobile  %></td>
                             <td><%- element.name  %></td>
-                            <td><%- element.email  %></td>
+                            <td><%- element.v_id  %></td>
+                            <td><%-  element.cnic  %></td>
                             <td><%-  element.status  %></td>
-                            <td><div class="btn-group" role="group" aria-label="Basic example">
-                                <button type="button" class="btn btn-secondary">Edit</button>
-                                <button type="button" class="btn btn-secondary">Deactive</button>
+                            <td>
+                              <div class="btn-group" role="group">
+                                <a href="/rental/editCar/<%- element._id  %>" class="btn btn-secondary">Edit</a>
+                                <a href="/rental/deleteCar/<%- element._id  %>" class="btn btn-secondary">Delete</a>
+                                <% if(element.status == 'active'){ %>
+                                <a href="/candidate/voter/change_status/deactive/<%- element._id  %>" class="btn btn-danger">Deactivate</a>
+                                <% }else{ %>
+                                <a href="/candidate/voter/change_status/active/<%- element._id  %>" class="btn btn-success">Activate</a>
+                                <% } %>
                               </div>
                             </td>
                           </tr>

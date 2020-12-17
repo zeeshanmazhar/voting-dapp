@@ -1,0 +1,36 @@
+<% include partials/head.ejs %>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+<% include partials/jumbotron.ejs %>
+
+<div style="text-align: center; font-size: 30px;" class="sidebar-brand-text mx-3">Please Enter Your CNIC to Vote</div>
+
+<div class="card-body">
+    <%- messages('message', locals) %>
+    <div class="row">
+        <div class="col-md-8">
+            <form method="POST" action="/dashboard/cast_vote">
+                <div class="form-group row">
+                    <label for="inputEmail3" class="col-sm-2 col-form-label">Enter Your CNIC</label>
+                    <div class="col-sm-10">
+                        <textarea type="text" class="form-control" name="cnic" placeholder="CNIC" required></textarea>
+                    </div>
+                </div>
+                <input type="hidden" name="candidate_id" value="<%- candidate_id %>">
+                <input type="hidden" name="ballot_id" value="<%- ballot_id %>">
+                <input type="hidden" name="ballot_name" value="<%- ballot_name %>">
+                <input type="hidden" name="candidate_name" value="<%- candidate_name %>">
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<% include partials/footer.ejs %>

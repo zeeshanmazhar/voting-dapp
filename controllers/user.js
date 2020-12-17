@@ -19,13 +19,11 @@ var auth = require('./includes/auth');
 router.use(expressip().getIpInfoMiddleware);
 
  var User = require('../models/user');
- var Contacts = require('../models/contacts');
+ var Ballot = require('../models/ballot');
  var Visitor = require('../models/visitors');
  var Sent = require('../models/sent');
 
-router.get('/admin/contacts/add',auth.adminAuth, function (req, res) {
-    res.render('admin/add_cafe');
-}); 
+ 
 
 router.post('/admin/contacts/add', auth.adminAuth, function (req, res) {
     const names = req.body.names;
@@ -208,12 +206,7 @@ function validateNumber(number){
             resolve(false);
     });
 }
-
-router.get('/admin/contacts/all',auth.adminAuth, function (req, res) {
-    Contacts.find({}).then(function (contacts) {
-        res.render('admin/all_cafe',{cafes:contacts});        
-    })    
-}); 
+ 
 
 router.get('/admin/visitors/all',auth.adminAuth, function (req, res) {
     Visitor.find({}).then(function (visitors) {
@@ -603,26 +596,49 @@ function getTotalAdminStuff() {
     let total = 0;
     return new Promise((resolve, reject) => {
         
-        Contacts.countDocuments({ }).then(function (t_contacts, err) {
+        User.countDocuments({user_type : 'candidate' }).then(function (t_candidates, err) {
 
-            arr.contacts = t_contacts;
+            arr.total_candidates = t_candidates;
 
         }).then(function () {
 
-            Sent.countDocuments({ status: 'pending' }).then(function (pending, err) {
+            User.countDocuments({ status: 'active' , user_type : 'candidate' }).then(function (active, err) {
 
-                arr.pending = pending;
+                arr.active_candidates = active;
 
             }).then(function () {
 
-                Sent.countDocuments({status:'sent'}).then(function (sents, err) {
+                User.countDocuments({status:'deactive', user_type : 'candidate'}).then(function (deactive, err) {
 
-                    arr.sent = sents;
+                    arr.deactive_candidates = deactive;
 
-                }).then(function () {
+                }).then(function(){
 
-                    resolve(arr)
+                    Ballot.countDocuments({}).then(function(t_ballots , err){
 
+                        arr.total_ballots = t_ballots;
+                        
+                    }).then(function(){
+
+                        Ballot.countDocuments({status:'active'}).then(function(active , err){
+
+                            arr.active_ballots = active;
+                        
+                        }).then(function(){
+
+                            Ballot.countDocuments({status:'deactive'}).then(function(deactive , err){
+
+                                arr.deactive_ballots = deactive;
+                            }).then(function () {
+
+                                resolve(arr)
+            
+                            });
+                            
+                        });
+
+                    });
+                    
                 });
 
             });

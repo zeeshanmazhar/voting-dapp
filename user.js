@@ -15,15 +15,32 @@ const userType = Object.freeze({
 
 const UserSchema = mongoose.Schema({
   
-  password: {
+  username: {
     type: String,
-    // required: true
-    default : ''
+    unique: true,
+    required: [true, "can't be blank"],
   },
-
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    required: [true, "can't be blank"],
+  },
   mobile: {
     type: String,
     default: ''
+  },
+  salt: {
+    type: String,
+    default: ''
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  picture: {
+    type: String,
+    default: "placeholder.jpg"
   },
   created: {
     type: Date,
@@ -37,37 +54,10 @@ const UserSchema = mongoose.Schema({
   },
   user_type: {
     type: String,
-    // enum: Object.values(userType),
+    enum: Object.values(userType),
     default: 'user'
-  },
-  ballot_id: {
-    type: String,
-    default : ''
-  },
-  name: {
-    type: String,
-    default : ''
-  },
-  cnic : {
-    type: String,
-    default : ''
-  },
-  v_id : {
-    type: String,
-    default : '',
-  },
-  c_id: {
-    type: String,
-    default : '',
-  },
-  c_symbol: {
-    type: String,
-    default : ''
-  },
-
+  }
 });
-
-
 
 Object.assign(UserSchema.statics, {
   Status,
@@ -80,7 +70,3 @@ Object.assign(UserSchema.statics, {
 UserSchema.plugin(uniqueValidator, {message: 'is already exist.'});
 
 const User = module.exports = mongoose.model('User', UserSchema);
-
-
-
-//----------------------------------------------------------------------

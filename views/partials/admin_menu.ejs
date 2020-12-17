@@ -5,7 +5,7 @@
 		  <div class="sidebar-brand-icon">
 			<i class="fa fa-envelope-o"></i>
 		  </div>
-		  <div class="sidebar-brand-text mx-3">Al Arabiya</div>
+		  <div class="sidebar-brand-text mx-3">Voting Dapp</div>
 		</a>
   
 		<!-- Divider -->
@@ -28,30 +28,55 @@
   
 		<!-- Nav Item - Pages Collapse Menu -->
 		<li class="nav-item">
-		  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#cafe" aria-expanded="true" aria-controls="cafe">
-			<i class="fas fa-fw fa-user"></i>
-			<span>Contacts</span>
+		  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#ballot" aria-expanded="true" aria-controls="ballot">
+			<i class="fas fa-vote-yea"></i>
+			<span>Ballots</span>
 		  </a>
-		  <div id="cafe" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+		  <div id="ballot" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
 			<div class="bg-white py-2 collapse-inner rounded">
-			  <a class="collapse-item" href="/admin/contacts/add">Add Contacts</a>
-			  <a class="collapse-item" href="/admin/contacts/all">All Contacts</a>
+			  <a class="collapse-item" href="/ballot/add_ballot">Add Ballot</a>
+			  <a class="collapse-item" href="/ballot/all_ballots">All Ballots</a>
 			</div>
 		  </div>
 		</li>
 		<li class="nav-item">
-			<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#visitors" aria-expanded="true" aria-controls="visitors">
-			  <i class="fas fa-fw fa-users"></i>
-			  <span>Messages</span>
+		  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#candidate" aria-expanded="true" aria-controls="candidate">
+			<i class="fas fa-fw fa-users"></i>
+			<span>Candidates</span>
+		  </a>
+		  <div id="candidate" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+			<div class="bg-white py-2 collapse-inner rounded">
+			  <a class="collapse-item" href="/candidate/add_candidate">Add Candidate</a>
+			  <a class="collapse-item" href="/candidate/all_candidates">All Candidates</a>
+			</div>
+		  </div>
+		</li>
+		<li class="nav-item">
+		  <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#voter" aria-expanded="true" aria-controls="voter">
+			<i class="fas fa-fw fa-user"></i>
+			<span>Voters</span>
+		  </a>
+		  <div id="voter" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+			<div class="bg-white py-2 collapse-inner rounded">
+			  <a class="collapse-item" href="/candidate/add_voter">Add Voter</a>
+			  <a class="collapse-item" href="/candidate/all_voters">All Voters</a>
+			</div>
+		  </div>
+		</li>
+		<!-- <li class="nav-item">
+			<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#visitors" aria-expanded="true"
+				aria-controls="visitors">
+				<i class="fas fa-fw fa-users"></i>
+				<span>Messages</span>
 			</a>
 			<div id="visitors" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-			  <div class="bg-white py-2 collapse-inner rounded">
-				<a class="collapse-item" href="/admin/messages/compile">New Compile</a>
-				<a class="collapse-item" href="/admin/messages/compiled">Compiled</a>
-				<a class="collapse-item" href="/admin/messages/send">Send</a>
-			  </div>
+				<div class="bg-white py-2 collapse-inner rounded">
+					<a class="collapse-item" href="/admin/messages/compile">New Compile</a>
+					<a class="collapse-item" href="/admin/messages/compiled">Compiled</a>
+					<a class="collapse-item" href="/admin/messages/send">Send</a>
+				</div>
 			</div>
-		  </li>
+		</li> -->
 		  
 		<!-- Divider -->
 		<hr class="sidebar-divider d-none d-md-block">
@@ -59,5 +84,4 @@
 		<div class="text-center d-none d-md-inline">
 		  <button class="rounded-circle border-0" id="sidebarToggle"></button>
 		</div>
-  
 	  </ul>

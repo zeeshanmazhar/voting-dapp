@@ -12,18 +12,26 @@ const MongoStore = require('connect-mongo')(session);
 const cors = require('cors');
 const app = express();
 
+
 var bindip = process.env.BINDIP || "127.0.0.1";
 var port = process.env.PORT || 3000;
 
 
 // const ccbemails = require('./controllers/emails');
 
-mongoose.connect(config.database, { useNewUrlParser: true });
-let db = mongoose.connection;
+// mongoose.connect(config.database, { useNewUrlParser: true });
+// let db = mongoose.connection;
 
-db.once('open', function() {
-    console.log('Connected to MongoDB');
-});
+// db.once('open', function() {
+//     console.log('Connected to MongoDB');
+// });
+
+var db = require('./config/database').MongoURI;
+mongoose.connect(db , {useNewUrlParser : true ,  useUnifiedTopology: true})
+.then(() => console.log('Database Connected...!'))
+.catch(err => console.log(err));
+mongoose.set('useCreateIndex', true);
+
 
 app.engine('ejs', require('ejs').renderFile);
 app.set('view engine', 'ejs');
@@ -39,7 +47,10 @@ app.use(session({
     secret: 'SVEgb8eEYb0OoAWGbchichu',
     resave: true, 
     saveUninitialized: true,
-    store: new MongoStore({ mongooseConnection: db }),
+    store: new MongoStore({ 
+        //mongooseConnection: db,
+        mongooseConnection: mongoose.connection,
+    }),
     cookie: {
         expires: 3600000
     }
@@ -95,8 +106,14 @@ app.get("/", (req, res) => {
 var user = require('./controllers/user');
  app.use('/', user);
 
-var messages = require('./controllers/messages');
-app.use('/', messages);
+var candidate = require('./controllers/candidate');
+app.use('/candidate', candidate);
+
+var ballot = require('./controllers/ballot');
+app.use('/ballot', ballot);
+
+var dashboard = require('./controllers/dashboard');
+app.use('/dashboard', dashboard);
 
 
 
@@ -109,8 +126,8 @@ app.listen(port, bindip, () => {
     console.log('Server listing on IP ' + bindip + ' and port ' + port);
 });
 
-cron.schedule('*/1 * * * *', function() {
-    if (!(db.readyState == 1)) {
-        console.log('Checking DB Connection: ' + ((db.readyState == 1)? 'Connected' : 'Not Connected'));        
-    }
-});
+// cron.schedule('*/1 * * * *', function() {
+//     if (!(db.readyState == 1)) {
+//         console.log('Checking DB Connection: ' + ((db.readyState == 1)? 'Connected' : 'Not Connected'));        
+//     }
+// });

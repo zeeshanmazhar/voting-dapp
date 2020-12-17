@@ -7,18 +7,26 @@ const Status = Object.freeze({
   Deactive: 'deactive'
 });
 
-const contactsSchema = mongoose.Schema({
-  name: {
+const VoteSchema = mongoose.Schema({
+  voter_cnic: {
     type: String,
     default: ''
   },
-  email: {
+  candidate_id: {
     type: String,
-    default: '',
+    default: ''
   },
-  mobile: {
+  candidate_name: {
     type: String,
-    required: true
+    default: ''
+  },
+  ballot_id: {
+    type: String,
+    default: ''
+  },
+  ballot_name: {
+    type: String,
+    default: ''
   },
   created: {
     type: Date,
@@ -32,8 +40,8 @@ const contactsSchema = mongoose.Schema({
   }
 });
 
-Object.assign(contactsSchema.statics, {
+Object.assign(VoteSchema.statics, {
   Status,
 });
  
-const contacts = module.exports = mongoose.model('contacts', contactsSchema);
+const Vote = module.exports = mongoose.model('vote', VoteSchema);
