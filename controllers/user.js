@@ -20,9 +20,7 @@ router.use(expressip().getIpInfoMiddleware);
 
  var User = require('../models/user');
  var Ballot = require('../models/ballot');
- var Visitor = require('../models/visitors');
- var Sent = require('../models/sent');
-
+ 
  
 
 router.post('/admin/contacts/add', auth.adminAuth, function (req, res) {

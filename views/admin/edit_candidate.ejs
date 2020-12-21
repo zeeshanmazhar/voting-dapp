@@ -3,42 +3,39 @@
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-      <h6 class="m-0 font-weight-bold text-primary">Add Candidate</h6>
+      <h6 class="m-0 font-weight-bold text-primary">Edit Candidate</h6>
     </div>
     <div class="card-body">
             <%- messages('message', locals) %>
             <div class="row">
                 <div class="col-md-8">
-                  <form method="POST" action="/candidate/add_candidate">
+                  <form method="POST" action="/candidate/update_candidate/<%- candidate._id %>">
                     <div class="form-group row">
                       <label for="inputEmail3" class="col-sm-2 col-form-label">Select Ballot</label>
                       <div class="col-sm-10">
                           <select name="ballot" class="form-control" id="exampleFormControlSelect1" required>
-                            <option value=""> Select Ballot </option>
-                              <% ballots.forEach(ballot => { %>
-                                <option value="<%- ballot._id %>"> <%- ballot.title %> </option>
-                               <% }); %>
+                            <option value="<%- ballot._id %>"> <%- ballot.title %> </option>
                             </select>
                       </div>
                     </div>
                         <div class="form-group row">
                           <label for="inputEmail3" class="col-sm-2 col-form-label">Candidate Name</label>
                           <div class="col-sm-10">
-                            <textarea type="text" class="form-control" name="name" placeholder="Candidate Name" required></textarea>
+                            <textarea type="text" class="form-control" name="name" placeholder="Candidate Name" required><%- candidate.name %></textarea>
                           </div>
                         </div>
                         
                         <div class="form-group row">
                           <label for="inputEmail3" class="col-sm-2 col-form-label">Voter ID</label>
                           <div class="col-sm-10">
-                            <textarea type="text" class="form-control" name="c_id" placeholder="Candidate ID" required></textarea>
+                            <textarea type="text" class="form-control" name="c_id" placeholder="Candidate ID" required><%- candidate.c_id %></textarea>
                           </div>
                         </div>
 
                         <div class="form-group row">
                           <label for="inputEmail3" class="col-sm-2 col-form-label">Voter Symbol</label>
                           <div class="col-sm-10">
-                            <textarea type="text" class="form-control" name="c_symbol" placeholder="Candidate Symbol" required></textarea>
+                            <textarea type="text" class="form-control" name="c_symbol" placeholder="Candidate Symbol" required><%- candidate.c_symbol %></textarea>
                           </div>
                         </div>
 
@@ -57,6 +54,7 @@
 
   <% include ../partials/footer.ejs %>
    
+  
 </body>
 
 </html>

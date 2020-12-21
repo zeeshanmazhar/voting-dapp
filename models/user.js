@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 
-var uniqueValidator = require('mongoose-unique-validator');
 
 const Status = Object.freeze({
   Active: 'active',
@@ -21,6 +20,14 @@ const UserSchema = mongoose.Schema({
     default : ''
   },
 
+  username: {
+    type: String,
+    default: ''
+  },
+  email: {
+    type: String,
+    default: ''
+  },
   mobile: {
     type: String,
     default: ''
@@ -77,7 +84,6 @@ Object.assign(UserSchema.statics, {
   userType,
 });
 
-UserSchema.plugin(uniqueValidator, {message: 'is already exist.'});
 
 const User = module.exports = mongoose.model('User', UserSchema);
 

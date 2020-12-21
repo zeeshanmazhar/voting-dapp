@@ -47,13 +47,25 @@ router.post('/add_candidate' , auth.adminAuth , function(req , res){
         if(found == null)
         {
             if(req.body.ballot != ''){
+
+                var username = req.body.name + req.body.c_id;
+                username = username.replace(/\s/g, '');
+                //console.log('username' , username);
+                
+                var email = req.body.name + req.body.c_id + '@example.com';
+                email = email.replace(/\s/g, '');
+                //console.log('email' , email);
+
+
                 var candidate = new User();
                 candidate.ballot_id = req.body.ballot;
                 candidate.name = req.body.name;
                 candidate.c_id = req.body.c_id;
                 candidate.c_symbol = req.body.c_symbol;
                 candidate.user_type = 'candidate';
-
+                candidate.username = username;
+                candidate.email = email;
+                
                 //res.send(candidate);
 
                 candidate.save((err, docs) => {
@@ -73,7 +85,6 @@ router.post('/add_candidate' , auth.adminAuth , function(req , res){
 
             }
             
-
         } else {
             req.flash('danger', 'Candidate already Exists.');
             res.redirect("/candidate/add_candidate");
@@ -82,6 +93,55 @@ router.post('/add_candidate' , auth.adminAuth , function(req , res){
     })
 
 })
+
+//Edit Candidate
+router.get('/edit_candidate/:id', (req, res, next) => {
+    console.log(req.params.id);
+    User.findOneAndUpdate({_id: req.params.id},req.body, { new: true }, (err, docs)=>{
+
+        //console.log('docs' , docs);
+
+        Ballot.findOne({_id : docs.ballot_id}).then(function(ballot){
+
+            //console.log('ballot' , ballot);
+
+            res.render('admin/edit_candidate.ejs', 
+            {
+                candidate:docs,
+                ballot : ballot 
+            });
+        })
+        
+        
+    })
+});
+
+//Update Hotel
+router.post('/update_candidate/:id', (req, res, next) => {
+    
+    User.findByIdAndUpdate({_id: req.params.id},req.body, (err)=>{
+        if (err) {
+            console.log(err);
+            next(err);
+            req.flash('danger', err);
+        } else {
+            req.flash('success', 'Candidate Updated successfully.');
+            res.redirect('/candidate/all_candidates');
+        }
+    })
+});
+
+//Delete Candidate
+router.get('/delete_candidate/:id',(req, res)=>{
+    User.findByIdAndDelete({_id:req.params.id}, err=>{
+        if(err){
+            console.log(err);
+        }else{
+            req.flash('success', 'Candidate Deleted successfully.');
+            res.redirect('/candidate/all_candidates');
+        }
+    });
+});
 
 
 router.get('/change_status/:status/:candidate_id', function (req, res) {
@@ -141,11 +201,22 @@ router.post('/add_voter' , auth.adminAuth , function(req , res){
     {
         if(check == null)
         {
+            var username = req.body.name + req.body.c_id;
+            username = username.replace(/\s/g, '');
+            //console.log('username', username);
+
+            var email = req.body.name + req.body.c_id + '@example.com';
+            email = email.replace(/\s/g, '');
+            //console.log('email', email);
+
+
             var voter = new User();
             voter.name = req.body.name;
             voter.v_id = req.body.v_id;
             voter.cnic = req.body.cnic;
             voter.user_type = 'voter';
+            voter.username = username;
+            voter.email = email;
 
             //res.send(voter);
 
@@ -166,6 +237,48 @@ router.post('/add_voter' , auth.adminAuth , function(req , res){
         }
     })  
 })
+
+//Edit Voter
+router.get('/edit_voter/:id', (req, res, next) => {
+    console.log(req.params.id);
+    User.findOneAndUpdate({_id: req.params.id},req.body, { new: true }, (err, docs)=>{
+
+        //console.log('docs' , docs);
+
+        res.render('admin/edit_voter.ejs',
+            {
+                voter: docs
+            });        
+        
+    })
+});
+
+//Update Hotel
+router.post('/update_voter/:id', (req, res, next) => {
+    
+    User.findByIdAndUpdate({_id: req.params.id},req.body, (err)=>{
+        if (err) {
+            console.log(err);
+            next(err);
+            req.flash('danger', err);
+        } else {
+            req.flash('success', 'Voter Updated successfully.');
+            res.redirect('/candidate/all_voters');
+        }
+    })
+});
+
+//Delete Candidate
+router.get('/delete_voter/:id',(req, res)=>{
+    User.findByIdAndDelete({_id:req.params.id}, err=>{
+        if(err){
+            console.log(err);
+        }else{
+            req.flash('success', 'Voter Deleted successfully.');
+            res.redirect('/candidate/all_voters');
+        }
+    });
+});
 
 router.get('/voter/change_status/:status/:voter_id', function (req, res) {
 

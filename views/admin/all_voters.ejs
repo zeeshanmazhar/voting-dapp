@@ -40,8 +40,8 @@
                             <td><%-  element.status  %></td>
                             <td>
                               <div class="btn-group" role="group">
-                                <a href="/rental/editCar/<%- element._id  %>" class="btn btn-secondary">Edit</a>
-                                <a href="/rental/deleteCar/<%- element._id  %>" class="btn btn-secondary">Delete</a>
+                                <a href="/candidate/edit_voter/<%- element._id  %>" class="btn btn-secondary">Edit</a>
+                                <a href="/candidate/delete_voter/<%- element._id  %>" class="btn btn-secondary">Delete</a>
                                 <% if(element.status == 'active'){ %>
                                 <a href="/candidate/voter/change_status/deactive/<%- element._id  %>" class="btn btn-danger">Deactivate</a>
                                 <% }else{ %>

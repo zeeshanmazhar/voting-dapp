@@ -46,31 +46,6 @@
 </div>
 
 <% include ../partials/footer.ejs %>
-<script>
-  $(document).ready(function () {
-    $('#pcat').on('change', function () {
-
-      console.log($('#pcat').val());
-
-      $.post("/admin/menu/get_childs", {
-        parent: $('#pcat').val()
-      },
-        function (_data, status) {
-          console.log(_data, "\nStatus: " + status);
-          target = $('#childs');
-          $(target).empty();
-          $('<option value="">-- Select Child Category --</option>').appendTo(target);
-          if (_data.childs.length > 0) {
-            if (typeof (_data.childs) != "undefined") {
-              _data.childs.forEach(element => {
-                $('<option value="' + element._id + '">' + element.title + '</option>').appendTo(target);
-              });
-            }
-          }
-        });
-    });
-  });
-</script>
 
 </body>
 
