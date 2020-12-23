@@ -34,6 +34,7 @@
         "connect-mongo": "^2.0.3",
         "cors": "^2.8.5",
         "ejs": "^2.6.1",
+        "ethers": "^5.0.24",
         "express": "^4.16.4",
         "express-ip": "^1.0.3",
         "express-messages": "^1.0.1",
@@ -41,6 +42,7 @@
         "express-sessions": "^1.0.6",
         "express-validator": "^5.3.0",
         "fs": "0.0.1-security",
+        "ganache-cli": "^6.12.1",
         "jstimezonedetect": "^1.0.6",
         "moment": "^2.22.2",
         "moment-timezone": "^0.5.23",
@@ -60,8 +62,10 @@
         "passport-custom": "^1.0.5",
         "passport-local": "^1.0.0",
         "passport-one-session-per-user": "^1.0.3",
+        "path": "^0.12.7",
         "router-express": "^1.5.2",
         "satoshi-bitcoin": "^1.0.4",
+        "solc": "^0.5.3",
         "twilio": "^3.39.4",
         "xoauth2": "^1.2.0"
     }

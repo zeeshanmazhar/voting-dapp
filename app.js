@@ -12,6 +12,8 @@ const MongoStore = require('connect-mongo')(session);
 const cors = require('cors');
 const app = express();
 
+const fs = require('fs');
+
 
 var bindip = process.env.BINDIP || "127.0.0.1";
 var port = process.env.PORT || 3000;
@@ -126,6 +128,36 @@ app.listen(port, bindip, () => {
     console.log('Server listing on IP ' + bindip + ' and port ' + port);
 });
 
+
+console.log(__dirname);
+
+ethers = require('ethers');
+bytecode = fs.readFileSync(__dirname+'/contracts/contracts_Voting_sol_Voting.bin').toString();
+abi = JSON.parse(fs.readFileSync(__dirname+'/contracts/contracts_Voting_sol_Voting.abi').toString());
+provider = new ethers.providers.JsonRpcProvider()
+
+provider.listAccounts().then(result => console.log(result));
+
+signer = provider.getSigner(0);
+factory = new ethers.ContractFactory(abi, bytecode, signer);
+
+contract = null;
+
+function setContract(c) {
+    console.log(contract);
+    contract = c;
+
+    console.log('Ye h address contract ka:',contract.address);
+}
+
+// factory.deploy([ethers.utils.formatBytes32String('Rama'), ethers.utils.formatBytes32String('Nick'), ethers.utils.formatBytes32String('Jose')]).then((c) => { 
+//     contract = c;
+//     setContract(c);
+
+// })
+
+//contract.totalVotesFor(ethers.utils.formatBytes32String('Rama')).then((f) => console.log(f))
+//contract.voteForCandidate(ethers.utils.formatBytes32String('Rama')).then((f) => console.log(f))
 // cron.schedule('*/1 * * * *', function() {
 //     if (!(db.readyState == 1)) {
 //         console.log('Checking DB Connection: ' + ((db.readyState == 1)? 'Connected' : 'Not Connected'));        

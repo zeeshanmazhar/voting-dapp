@@ -14,6 +14,7 @@
                       <th>#</th>
                       <th>Ballot Title</th>
                       <th>Status</th>
+                      <th>Contract Address</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -22,6 +23,7 @@
                       <th>#</th>
                       <th>Ballot Title</th>
                       <th>Status</th>
+                      <th>Contract Address</th>
                       <th>Action</th>
                     </tr>
                   </tfoot>
@@ -32,12 +34,15 @@
                             <td><%- key+1  %></td>
                             <td><%- element.title  %></td>
                             <td><%-  element.status  %></td>
+                            <td><%-  element.address  %></td>
                             <td>
                               <div class="btn-group" role="group">
                                 <% if(element.status == 'active'){ %>
-                                <a href="/ballot/change_status/deactive/<%- element._id  %>" class="btn btn-danger">Deactivate</a>
+                                <a href="/ballot/change_status/deactive/<%- element._id  %>" class="btn btn-sm btn-danger">Deactivate</a>
                                 <% }else{ %>
-                                <a href="/ballot/change_status/active/<%- element._id  %>" class="btn btn-success">Activate</a>
+                                <a href="/ballot/change_status/active/<%- element._id  %>" class="btn btn-sm btn-success">Activate</a>
+                                <% } if(element.address == ''){ %>
+                                <a href="/ballot/compile/<%- element._id%>" class="btn btn-sm btn-primary">Deploy Contract</a>
                                 <% } %>
                               </div>
                             </td>
@@ -47,8 +52,7 @@
                   </tbody>
                 </table>
               </div>
-            
-      
+
     </div>
   </div>
 

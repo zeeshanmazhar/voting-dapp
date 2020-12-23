@@ -21,6 +21,10 @@ const ballotSchema = mongoose.Schema({
     type: String,
     enum: Object.values(Status),
     default: 'active'
+  },
+  address:{
+    type: String,
+    default: ''
   }
 });
 
