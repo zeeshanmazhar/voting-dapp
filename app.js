@@ -129,8 +129,6 @@ app.listen(port, bindip, () => {
 });
 
 
-console.log(__dirname);
-
 ethers = require('ethers');
 bytecode = fs.readFileSync(__dirname+'/contracts/contracts_Voting_sol_Voting.bin').toString();
 abi = JSON.parse(fs.readFileSync(__dirname+'/contracts/contracts_Voting_sol_Voting.abi').toString());

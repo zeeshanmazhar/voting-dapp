@@ -148,10 +148,6 @@ function compileContract(cands) {
 
         factory.deploy(cands).then((c) => { 
 
-            // factory.attach(c.address).then(function (params) {
-            //     console.log(params);
-            // })
-
         //    contract =  new ethers.Contract( c.address , abi , signer );
             //     let contract = new ethers.Contract(c.address, abi, signer);
             //     console.log(contract);
