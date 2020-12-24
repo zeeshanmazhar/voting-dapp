@@ -33,7 +33,6 @@ router.get('/all_ballots', auth.adminAuth, function (req, res) {
     })    
 });
 
-
 router.get('/add_ballot', auth.adminAuth, function (req, res) {
     
     res.render('admin/add_ballot');        
@@ -99,11 +98,10 @@ router.get('/change_status/:status/:ballot_id', function (req, res) {
 router.get('/compile/:ballot_id', auth.adminAuth, function (req, res) {
 
     var cands = [];
+
     Ballot.findOne({_id:req.params.ballot_id}).then(function (_ballot) {
 
         User.find({user_type : 'candidate', ballot_id:req.params.ballot_id}).then(function (candidates) {
-
-            console.log('candsss are', candidates);
 
             if (candidates.length > 0) {
 
@@ -151,10 +149,6 @@ function compileContract(cands) {
         //    contract =  new ethers.Contract( c.address , abi , signer );
             //     let contract = new ethers.Contract(c.address, abi, signer);
             //     console.log(contract);
-
-            //     console.log('====================================');
-            //     console.log('');
-            //     console.log('====================================');
 
             // contract.voteForCandidate(ethers.utils.formatBytes32String('5fe2ef310a9c3c06cdc9a255')).then((f) => {
                     
