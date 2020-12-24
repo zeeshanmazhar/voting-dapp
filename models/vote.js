@@ -10,23 +10,27 @@ const Status = Object.freeze({
 const VoteSchema = mongoose.Schema({
   voter_cnic: {
     type: String,
-    default: ''
+    required : true
+  },
+  voter_id: {
+    type: String,
+    required : true
   },
   candidate_id: {
     type: String,
-    default: ''
+    required : true
   },
   candidate_name: {
     type: String,
-    default: ''
+    required : true
   },
   ballot_id: {
     type: String,
-    default: ''
+    required : true
   },
   ballot_name: {
     type: String,
-    default: ''
+    required : true
   },
   created: {
     type: Date,

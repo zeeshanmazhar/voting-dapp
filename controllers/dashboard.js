@@ -39,8 +39,7 @@ router.get('/add_cnic/:candidate_id/:ballot_id' , function(req , res){
     var ballot_id = req.params.ballot_id;
 
     Ballot.findOne({_id : req.params.ballot_id}).then(function(ballot){
-        
-
+        console.log('ballot' , ballot.title);
 
         User.findOne({_id : req.params.candidate_id}).then(function(candidate){
             console.log('Candidate' , candidate.name);
@@ -60,10 +59,11 @@ router.post('/cast_vote', function (req, res) {
 
     console.log('cnic', req.body.cnic);
 
-    User.findOne({ cnic: req.body.cnic }).then(function (got_user) {
+    // check if Voter Exists
+    User.findOne({ cnic: req.body.voter_cnic , v_id: req.body.voter_id }).then(function (got_user) {
         console.log('got_user', got_user);
 
-        Vote.findOne({ voter_cnic: req.body.cnic }).then(function (find_user) {
+        Vote.findOne({ voter_cnic: req.body.voter_cnic , voter_id : req.body.voter_id }).then(function (find_user) {
             console.log('find_user', find_user);
 
             if (got_user != null) {
@@ -72,7 +72,8 @@ router.post('/cast_vote', function (req, res) {
                     res.redirect("/dashboard/vote_casted");
                 } else {
                     var vote = new Vote();
-                    vote.voter_cnic = req.body.cnic;
+                    vote.voter_cnic = req.body.voter_cnic;
+                    vote.voter_id = req.body.voter_id;
                     vote.candidate_name = req.body.candidate_name;
                     vote.candidate_id = req.body.candidate_id;
                     vote.candidate_name = req.body.candidate_name;
@@ -105,6 +106,35 @@ router.post('/cast_vote', function (req, res) {
 router.get('/vote_casted' , function(req , res){
     res.render('done_vote');
 })
+
+router.get('/select_ballot', function (req, res) {
+    Ballot.find({status : 'active'}).then(function (ballots) {
+        res.render('admin/select_ballot.ejs',{ballots:ballots});        
+    })    
+});
+
+router.get('/selected_ballot_candidate/:ballot_id' , function(req , res){
+    console.log('ballot Id' , req.params.ballot_id);
+
+    User.find({ballot_id : req.params.ballot_id }).then(function(candidates){
+        console.log('candidate' , candidates);
+        
+        Vote.find({}).then(function(votes){
+            res.render('admin/ballot_candidate.ejs' , {
+                candidates : candidates,
+                votes : votes
+            })
+
+        })
+
+        
+    })
+})
+
+router.get('/get_votes', function (req,res) {
+
+})
+
 
 function castVote(ballotId, voterId, candId) {
     return new Promise((resolve, reject)=>{

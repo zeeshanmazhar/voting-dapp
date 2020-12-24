@@ -1,0 +1,84 @@
+<% include ../partials/head.ejs %>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+    <% include ../partials/header.ejs %>
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Total Candidates</h1>
+            </div>
+
+            <!-- Content Row -->
+
+            <input type="hidden" name="" id="total" value="<%- candidates.length %>">
+
+            <div class="row">
+                <% candidates.forEach((candidate , key) => { %>
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <input type="hidden" id="candidate_id<%- key %>" value="<%- candidate._id %>|<%- candidate.name %>">
+                            <div class="card border-left-primary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xl font-weight-bold text-primary text-uppercase mb-1">
+                                                <%- candidate.name %>
+                                            </div>
+                                            <div class="h6 mb-0 font-weight-bold text-gray-800">Symbol : <%- candidate.c_symbol %></div>
+                                            <%add = 0 %>
+                                            <% votes.forEach(vote => { %>
+                                                <% if(candidate._id == vote.candidate_id) { %>
+                                                        <% add = add + 1 %>
+                                            
+                                                    <% } %>
+                                                <% }) %>
+                                                <div class="h6 mb-0 font-weight-bold text-gray-800">Votes : <%- add %></div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-vote-yea fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                        </a>
+                    </div>
+            </div>
+            <% }) %>
+        </div>
+
+        <!-- Content Row -->
+        </div>
+        <!-- /.container-fluid -->
+
+        </div>
+        <!-- End of Main Content -->
+
+        <% include ../partials/footer.ejs %>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+        
+        <script>
+
+            var total = $('#total').val();
+            console.log('total' , total);
+
+            cand_id = [];
+            
+            for (let index = 0; index < total; index++) {
+                //const element = 'array'+[index];
+                //console.log(element);
+                cand_id.push($('#candidate_id'+[index]).val());
+                //console.log('cand_id' , cand_id);
+            }
+
+           // cand_id = $('.candidate_id').val();
+            console.log('cand_id' , cand_id);
+
+            $.post('/dashboard/get_votes') , {
+                candidate_id : cand_id
+            }
+    
+        </script>
+        
+        </body>
+
+        </html>
