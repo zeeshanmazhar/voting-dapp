@@ -32,6 +32,10 @@ const VoteSchema = mongoose.Schema({
     type: String,
     required : true
   },
+  hash: {
+    type: String,
+    default : ''
+  },
   created: {
     type: Date,
     default: Date.now,

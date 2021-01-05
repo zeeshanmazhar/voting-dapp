@@ -55,15 +55,22 @@ router.get('/add_cnic/:candidate_id/:ballot_id' , function(req , res){
   
 })
 
-router.post('/cast_vote', function (req, res) {
+router.post('/cast_vote', async function (req, res) {
 
-    console.log('cnic', req.body.cnic);
+            let voteHash = ''
+            let _balot = await Ballot.findOne({_id:req.body.ballot_id})
+            signer = provider.getSigner(0);
+            let contract = new ethers.Contract(_balot.address, abi, signer);
+            console.log(contract);
+
+            // contract.totalVotesFor(ethers.utils.formatBytes32String(req.body.candidate_id)).then((f) => console.log(f))
+
 
     // check if Voter Exists
     User.findOne({ cnic: req.body.voter_cnic , v_id: req.body.voter_id }).then(function (got_user) {
         console.log('got_user', got_user);
 
-        Vote.findOne({ voter_cnic: req.body.voter_cnic , voter_id : req.body.voter_id }).then(function (find_user) {
+        Vote.findOne({ voter_cnic: req.body.voter_cnic , voter_id : req.body.voter_id }).then(async function (find_user) {
             console.log('find_user', find_user);
 
             if (got_user != null) {
@@ -71,6 +78,10 @@ router.post('/cast_vote', function (req, res) {
                     req.flash('danger', 'Your Have already Casted Your Vote!.');
                     res.redirect("/dashboard/vote_casted");
                 } else {
+
+                    voteHash = await contract.voteForCandidate(ethers.utils.formatBytes32String( req.body.candidate_id))
+                    console.log('vote hash', voteHash);
+
                     var vote = new Vote();
                     vote.voter_cnic = req.body.voter_cnic;
                     vote.voter_id = req.body.voter_id;
@@ -79,8 +90,12 @@ router.post('/cast_vote', function (req, res) {
                     vote.candidate_name = req.body.candidate_name;
                     vote.ballot_id = req.body.ballot_id;
                     vote.ballot_name = req.body.ballot_name;
+                    vote.hash = voteHash.hash;
 
                     //res.send(vote);
+
+                    console.log('saving', vote);
+
                     vote.save((err, docs) => {
                         if (err) {
                             console.log(err);
@@ -95,7 +110,7 @@ router.post('/cast_vote', function (req, res) {
                     
                 }
                 
-            } else {
+            } else { 
                 req.flash('danger', 'This Voter is not registered.');
                 res.redirect("/dashboard/add_cnic/" + req.body.candidate_id + "/" + req.body.ballot_id);
             }
