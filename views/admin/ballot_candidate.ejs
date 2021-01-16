@@ -25,8 +25,7 @@
                                         <div class="text-xl font-weight-bold text-primary text-uppercase mb-1">
                                             <%- candidate.name %>
                                         </div>
-                                        <div class="h6 mb-0 font-weight-bold text-gray-800">Symbol : <%- candidate.c_symbol %>
-                                        </div>
+                                        
                                         <%add=0 %>
                                             <% votes.forEach(vote=> { %>
                                                 <% if(candidate._id==vote.candidate_id) { %>
@@ -38,9 +37,11 @@
                                                                         %>
                                                                 </div>
                                                                 <% winner.push({total:add, name:candidate.name}) %>
+                                                                <div class="h6 mb-0 font-weight-bold text-gray-800">Symbol : <%- candidate.c_symbol %>
+                                                                </div>
                                     </div>
-                                    <div class="col-auto">
-                                        <i class="fas fa-vote-yea fa-2x text-gray-300"></i>
+                                    <div class="col-auto">  
+                                     <img style="width: 200px" class="img-responsive" src="../../uploads/<%- candidate.c_image[0] %>" alt="" srcset="">
                                     </div>
                                 </div>
                             </div>
