@@ -11,39 +11,53 @@
 
             <!-- Content Row -->
 
-            <input type="hidden" name="" id="total" value="<%- candidates.length %>">
+            <input type="hidden" id="total" value="<%- candidates.length %>">
 
+            <% var winner = [] %>
             <div class="row">
-                <% candidates.forEach((candidate , key) => { %>
+                <% candidates.forEach((candidate , key)=> { %>
                     <div class="col-xl-3 col-md-6 mb-4">
                         <input type="hidden" id="candidate_id<%- key %>" value="<%- candidate._id %>|<%- candidate.name %>">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xl font-weight-bold text-primary text-uppercase mb-1">
-                                                <%- candidate.name %>
-                                            </div>
-                                            <div class="h6 mb-0 font-weight-bold text-gray-800">Symbol : <%- candidate.c_symbol %></div>
-                                            <%add = 0 %>
-                                            <% votes.forEach(vote => { %>
-                                                <% if(candidate._id == vote.candidate_id) { %>
-                                                        <% add = add + 1 %>
-                                            
-                                                    <% } %>
-                                                <% }) %>
-                                                <div class="h6 mb-0 font-weight-bold text-gray-800">Votes : <%- add %></div>
+                        <div class="card border-left-primary shadow h-100 py-2">
+                            <div class="card-body">
+                                <div class="row no-gutters align-items-center">
+                                    <div class="col mr-2">
+                                        <div class="text-xl font-weight-bold text-primary text-uppercase mb-1">
+                                            <%- candidate.name %>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-vote-yea fa-2x text-gray-300"></i>
+                                        <div class="h6 mb-0 font-weight-bold text-gray-800">Symbol : <%- candidate.c_symbol %>
                                         </div>
+                                        <%add=0 %>
+                                            <% votes.forEach(vote=> { %>
+                                                <% if(candidate._id==vote.candidate_id) { %>
+                                                    <% add=add + 1 %>
+            
+                                                        <% } %>
+                                                            <% }) %>
+                                                                <div class="h6 mb-0 font-weight-bold text-gray-800">Votes : <%- add
+                                                                        %>
+                                                                </div>
+                                                                <% winner.push(add) %>
+                                    </div>
+                                    <div class="col-auto">
+                                        <i class="fas fa-vote-yea fa-2x text-gray-300"></i>
                                     </div>
                                 </div>
-                        </a>
+                            </div>
+                            </a>
+                        </div>
                     </div>
+                    <% }) %>
             </div>
+        <% var sum = 0 %>
+        <% winner.forEach((element, key) => { %>
+            <% if(sum < element){ %>
+                <% sum = element %>
+                <%- sum %>
+                <% } else { %>
+                    <% element %>
+                    <% } %>
             <% }) %>
-        </div>
 
         <!-- Content Row -->
         </div>

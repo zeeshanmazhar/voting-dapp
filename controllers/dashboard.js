@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const fs = require('fs');
+var moment = require("moment");
 
 var User = require('../models/user');
 var Ballot = require('../models/ballot');
@@ -14,8 +15,20 @@ provider = new ethers.providers.JsonRpcProvider();
 
 
 router.get('/all_ballots', function (req, res) {
-    Ballot.find({status : 'active'}).then(function (ballots) {
-        res.render('select_pole.ejs',{ballots:ballots});        
+    var momentB = moment();
+    Ballot.find({status : 'active', expire_date : {$gte : momentB}}).then(function (ballots) {
+        //res.send(ballots[4].expire_date);
+        //console.log('ballot', ballots);
+        res.render('select_pole.ejs',{ballots:ballots});  
+        //var date = moment(ballots[5].expire_date)
+        //var now = moment();
+        //res.send(ballots);
+
+        // var momentA = moment(ballots[5].expire_date);
+        // if (momentA > momentB) console.log('greater');
+        // else if (momentA < momentB) console.log('less');
+        // else console.log('equal');
+    
     })    
 });
 

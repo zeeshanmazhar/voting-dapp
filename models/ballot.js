@@ -1,3 +1,4 @@
+const { Timestamp } = require('mongodb');
 const mongoose = require('mongoose');
 
 var uniqueValidator = require('mongoose-unique-validator');
@@ -25,6 +26,10 @@ const ballotSchema = mongoose.Schema({
   address:{
     type: String,
     default: ''
+  },
+  expire_date:{
+    type: String,
+    required: true
   }
 });
 

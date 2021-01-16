@@ -15,6 +15,7 @@
                       <th>Name</th>
                       <th>Candidate ID</th>
                       <th>Candidate Symbol</th>
+                      <th>Candidate Image</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -25,6 +26,7 @@
                       <th>Name</th>
                       <th>Candidate ID</th>
                       <th>Candidate Symbol</th>
+                      <th>Candidate Image</th>
                       <th>Status</th>
                       <th>Action</th>
                     </tr>
@@ -37,6 +39,7 @@
                             <td><%- element.name  %></td>
                             <td><%- element.c_id  %></td>
                             <td><%-  element.c_symbol  %></td>
+                            <td><img style="width: 100px; height: 60px;" src="/uploads/<%- element.c_image  %>" alt="image"></td>
                             <td><%-  element.status  %></td>
                             <td>
                               <div class="btn-group" role="group">

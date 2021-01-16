@@ -42,6 +42,8 @@ router.get('/add_ballot', auth.adminAuth, function (req, res) {
 router.post('/add_ballot' , auth.adminAuth , function(req , res){
     var ballot = new Ballot();
     ballot.title = req.body.title;
+    var momentA = moment(req.body.date)
+    ballot.expire_date = momentA;
     
     //res.send(ballot);
 

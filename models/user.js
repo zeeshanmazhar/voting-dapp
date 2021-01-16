@@ -71,6 +71,10 @@ const UserSchema = mongoose.Schema({
     type: String,
     default : ''
   },
+  c_image: [{
+    type: String,
+    default : ''
+  }],
 
 });
 

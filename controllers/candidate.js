@@ -30,7 +30,7 @@ router.get('/add_candidate', auth.adminAuth, function (req, res) {
 
     Ballot.find({status : 'active'}).then(function(ballots)
     {
-        console.log('ballots' , ballots);
+        //console.log('ballots' , ballots);
         res.render('admin/add_candidate' , {
             ballots : ballots
         });
@@ -40,57 +40,179 @@ router.get('/add_candidate', auth.adminAuth, function (req, res) {
         
 });
 
-router.post('/add_candidate' , auth.adminAuth , function(req , res){
-
-    User.findOne({c_id : req.body.c_id}).then(function(found){
-        console.log('found' , found);
-        if(found == null)
-        {
-            if(req.body.ballot != ''){
-
-                var username = req.body.name + req.body.c_id;
-                username = username.replace(/\s/g, '');
-                //console.log('username' , username);
-                
-                var email = req.body.name + req.body.c_id + '@example.com';
-                email = email.replace(/\s/g, '');
-                //console.log('email' , email);
-
-
-                var candidate = new User();
-                candidate.ballot_id = req.body.ballot;
-                candidate.name = req.body.name;
-                candidate.c_id = req.body.c_id;
-                candidate.c_symbol = req.body.c_symbol;
-                candidate.user_type = 'candidate';
-                candidate.username = username;
-                candidate.email = email;
-                
-                //res.send(candidate);
-
-                candidate.save((err, docs) => {
-                    if (err) {
-                        console.log(err);
-                        req.flash('danger', err);
-                    }
-                    else {
-                        req.flash('success', 'Candidate added successfully.');
-                        console.log('Candidate Added Successfully');
-                        res.redirect("/candidate/all_candidates");
-                    }
-                })
-            } else {
-                req.flash('danger', 'Select Ballot First.!');
-                res.redirect("/candidate/add_candidate");
-
+function getFileNames(files) {
+    var arr = [];
+    return new Promise((resolve, reject) => {
+        if (!files) {
+            return resolve([]);
+        }
+        files.forEach((file, key) => {
+            arr.push(file.filename);
+            if (files.length - 1 == key) {
+                resolve(arr);
             }
-            
-        } else {
-            req.flash('danger', 'Candidate already Exists.');
-            res.redirect("/candidate/add_candidate");
+        });
+    })
+
+}
+
+var storage = multer.diskStorage({
+    destination: function (req, file, callback) {
+        callback(null, __dirname.replace('controllers', '') + 'public/uploads/');
+    },
+    filename: function (req, file, callback) {
+
+        var ext = file.mimetype.split('/')[1];
+        callback(null, '-' + Date.now() + '.' + ext);
+    }
+});
+
+const imageFilter = function (req, file, cb) {
+    // Accept images only
+    if (!file.originalname.match(/\.(jpg|JPG|jpeg|JPEG|png|PNG|gif|GIF)$/)) {
+        req.fileValidationError = 'Only image files are allowed!';
+        return cb(new Error('Only image files are allowed!'), false);
+    }
+    cb(null, true);
+};
+
+router.post('/add_new_candidate', auth.adminAuth, function(req, res){
+    console.log('body', req.files);
+    //res.send(req.body);
+     var upload = multer({ storage: storage, fileFilter: imageFilter }).fields([{ name: 'c_image' }]);
+
+     console.log(upload);
+    // res.send(req.body);
+    upload(req, res, function (err) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+
+            console.log(req.files);
+            console.log('body', req.body);
+
+            // getFileNames(req.files.c_image).then(function (images) {
+            //     console.log('image' , images);
+            //     res.send(images);
+                
+            // });
 
         }
-    })
+    });
+
+})
+
+router.post('/add_candidate' , auth.adminAuth, function(req , res){
+
+    var upload = multer({ storage: storage, fileFilter: imageFilter }).fields([{ name: 'c_image' }]);
+
+    upload(req, res, function (err) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+
+            //console.log('body',req.body.c_id);
+            console.log(req.files.c_image);
+            
+            getFileNames(req.files.c_image).then(function (images) {
+                console.log('image' , images);
+
+                User.findOne({c_id : req.body.c_id}).then(function(found){
+                    console.log('found',found);
+
+                    if(found == null){
+                        if(req.body.ballot != '' || req.body.ballot != undefined){
+                            var username = req.body.name + req.body.c_id;
+                            username = username.replace(/\s/g, '');
+                            //console.log('username' , username);
+
+                            var email = req.body.name + req.body.c_id + '@example.com';
+                            email = email.replace(/\s/g, '');
+                            //console.log('email' , email);
+
+                            var candidate = new User();
+                            candidate.ballot_id = req.body.ballot;
+                            candidate.name = req.body.name;
+                            candidate.c_id = req.body.c_id;
+                            candidate.c_symbol = req.body.c_symbol;
+                            candidate.user_type = 'candidate';
+                            candidate.username = username;
+                            candidate.email = email;
+                            candidate.c_image = images;
+
+                            //res.send(candidate);
+
+                            candidate.save((err, docs) => {
+                                if (err) {
+                                    console.log(err);
+                                    req.flash('danger', err);
+                                }
+                                else {
+                                    req.flash('success', 'Candidate added successfully.');
+                                    console.log('Candidate Added Successfully');
+                                    res.redirect("/candidate/all_candidates");
+                                }
+                            })
+
+                        } else {
+                            req.flash('danger', 'Select Ballot First.!');
+                            res.redirect("/candidate/add_candidate");
+
+                        }
+
+                    } else {
+                        req.flash('danger', 'Candidate already Exists.');
+                        res.redirect("/candidate/add_candidate");
+
+                    }
+                })
+
+                
+
+               
+                
+
+            });
+
+        }
+    });
+
+
+    //console.log('body', req.body);
+    // User.find({c_id : req.body.c_id}).then(function(found){
+    //     console.log('found' , found);
+    //     if(found != null)
+    //     {
+    //         if(req.body.ballot != '' || req.body.ballot != undefined){
+  
+    //             console.log('name',req.body.name);
+    //             console.log('id',req.body.c_id);
+    //             console.log('ballot',req.body.ballot);
+    //             var username = req.body.name + req.body.c_id;
+    //             username = username.replace(/\s/g, '');
+    //             //console.log('username' , username);
+                
+    //             var email = req.body.name + req.body.c_id + '@example.com';
+    //             email = email.replace(/\s/g, '');
+    //             //console.log('email' , email);
+
+                
+                
+                
+    //         } else {
+    //             req.flash('danger', 'Select Ballot First.!');
+    //             res.redirect("/candidate/add_candidate");
+
+    //         }
+            
+    //     } else {
+    //         req.flash('danger', 'Candidate already Exists.');
+    //         res.redirect("/candidate/add_candidate");
+
+    //     }
+    // })
 
 })
 
@@ -116,7 +238,7 @@ router.get('/edit_candidate/:id', (req, res, next) => {
     })
 });
 
-//Update Hotel
+//Update Candidate
 router.post('/update_candidate/:id', (req, res, next) => {
     
     User.findByIdAndUpdate({_id: req.params.id},req.body, (err)=>{
