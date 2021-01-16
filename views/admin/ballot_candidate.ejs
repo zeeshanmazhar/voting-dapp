@@ -37,7 +37,7 @@
                                                                 <div class="h6 mb-0 font-weight-bold text-gray-800">Votes : <%- add
                                                                         %>
                                                                 </div>
-                                                                <% winner.push(add) %>
+                                                                <% winner.push({total:add, name:candidate.name}) %>
                                     </div>
                                     <div class="col-auto">
                                         <i class="fas fa-vote-yea fa-2x text-gray-300"></i>
@@ -49,11 +49,14 @@
                     </div>
                     <% }) %>
             </div>
-        <% var sum = 0 %>
+        <% var sum = 0; cWinner = '' %>
+
         <% winner.forEach((element, key) => { %>
-            <% if(sum < element){ %>
-                <% sum = element %>
-                <%- sum %>
+           
+            <% if(sum < element.total){ %>
+                <% sum = element.total; cWinner = element.name %>
+                <h3>Winner :  <%- cWinner %></h3>
+               
                 <% } else { %>
                     <% element %>
                     <% } %>

@@ -265,7 +265,6 @@ router.get('/delete_candidate/:id',(req, res)=>{
     });
 });
 
-
 router.get('/change_status/:status/:candidate_id', function (req, res) {
 
     console.log('ID' , req.params.candidate_id);
@@ -315,7 +314,6 @@ router.get('/add_voter', auth.adminAuth, function (req, res) {
     res.render('admin/add_voter');
         
 });
-
 
 router.post('/add_voter' , auth.adminAuth , function(req , res){
 

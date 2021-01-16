@@ -142,8 +142,7 @@ router.get('/select_ballot', function (req, res) {
 });
 
 router.get('/selected_ballot_candidate/:ballot_id' , function(req , res){
-    console.log('ballot Id' , req.params.ballot_id);
-
+   
     User.find({ballot_id : req.params.ballot_id }).then(function(candidates){
         console.log('candidate' , candidates);
         
