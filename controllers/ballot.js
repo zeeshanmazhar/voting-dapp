@@ -42,9 +42,12 @@ router.get('/add_ballot', auth.adminAuth, function (req, res) {
 router.post('/add_ballot' , auth.adminAuth , function(req , res){
     var ballot = new Ballot();
     ballot.title = req.body.title;
-    var momentA = moment(req.body.date)
+    var momentA = moment(req.body.date).format('LLL');
     ballot.expire_date = momentA;
     
+    console.log('date', req.body.date);
+    console.log('expire_date', ballot.expire_date);
+
     //res.send(ballot);
 
     ballot.save((err , docs) => {

@@ -15,10 +15,11 @@ provider = new ethers.providers.JsonRpcProvider();
 
 
 router.get('/all_ballots', function (req, res) {
-    var momentB = moment();
-    Ballot.find({status : 'active', expire_date : {$gte : momentB}}).then(function (ballots) {
+    var momentB = moment().format('LLL');
+    console.log('momentB', momentB);
+    Ballot.find({status : 'active', expire_date : {$gt : momentB}}).then(function (ballots) {
         //res.send(ballots[4].expire_date);
-        //console.log('ballot', ballots);
+        console.log('ballot', ballots);
         res.render('select_pole.ejs',{ballots:ballots});  
         //var date = moment(ballots[5].expire_date)
         //var now = moment();
